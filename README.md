@@ -5,11 +5,19 @@ A small warehouse stock and reservation app. You can receive stock, reserve it f
 **Stack:** Python 3.9+ and SQLite, standard library only (nothing to install).
 **Why:** It is the smallest stack that still gives real transactions and database constraints, so the rules below are enforced and not just described.
 
+## Documents
+
+| Document | What's in it |
+|---|---|
+| [PRD.md](PRD.md) | Problem, users, 11 business rules, 14 requirements with IDs, acceptance criteria, open questions |
+| [DESIGN.md](DESIGN.md) | Data model (ER diagram), source of truth for each number, reservation status flow, sequence diagrams for races, retries and failures |
+| [SCREENS.md](SCREENS.md) | Screen spec: layout, data shown, actions, validations, and empty, error, duplicate and restricted states |
+
 ## Run it
 
 ```bash
 python3 app.py          # open http://localhost:8000
-python3 -m unittest -v  # 13 tests
+python3 -m unittest -v  # 15 tests
 ```
 
 Delete `stock.db` to start fresh.

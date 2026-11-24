@@ -47,6 +47,19 @@ class StockTests(unittest.TestCase):
         self.inv.reserve("RICE", 6, "SO-1", k())
         self.assertEqual(self.bal()["available"], 0)
 
+    def test_receive_writes_movement_with_balances_after(self):
+        self.inv.receive("RICE", 100, k())
+        m = self.inv.movements()[0]
+        self.assertEqual((m["action"], m["qty"], m["on_hand_after"], m["held_after"],
+                          m["reserved_after"]), ("RECEIVE", 100, 100, 0, 0))
+
+    def test_reserve_needs_order_reference(self):
+        self.inv.receive("RICE", 10, k())
+        for ref in ("", "   ", None):
+            with self.assertRaises(StockError):
+                self.inv.reserve("RICE", 1, ref, k())
+        self.assertEqual(self.bal()["reserved"], 0)
+
     def test_cannot_hold_reserved_stock(self):
         self.inv.receive("RICE", 10, k())
         self.inv.reserve("RICE", 8, "SO-1", k())
